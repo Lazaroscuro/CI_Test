@@ -9,13 +9,16 @@ test: testsuite.elf
 	./testsuite.elf
 
 %.o: %.c
-	$(CC) -Wall -Wextra -pedantic -c -o $@ $<
+	$(CC) $(CFLAGS) -c -o $@ $<
 
 %.o: %.cpp
-	$(CXX) -Wall -Wextra -pedantic -c -o $@ $<
+	$(CXX) $(CXXFLAGS) -c -o $@ $<
 
 CI_Test.elf: CI_Test.o foo.o
 	$(CC) -o $@ $^
 
 testsuite.elf: test_foo.o foo.o
 	$(CXX) -o $@ $^ -lcppunit
+
+CFLAGS=-Wall -Wextra -pedantic 
+CXXFLAGS=-std=c++11 $(CFLAGS)
